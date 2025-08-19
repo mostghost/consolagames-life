@@ -1,4 +1,6 @@
 import os
+import pprint
+
 
 class CGDisplay:
     def __init__(self):
@@ -22,24 +24,24 @@ class CGDisplay:
         for index, line in enumerate(grid):
             if index == 0:
                 start_line = []
-                start_line.extend(["┏"])
-                start_line.extend(["━" for x in range(len(line) - 2)])
-                start_line.extend(["┓"])
+                start_line.extend(["╭"])
+                start_line.extend(["─" for x in range((len(line) * 2) - 2)])
+                start_line.extend(["╮"])
                 new_grid.append("".join(start_line))
                 continue
             elif index == len(grid) - 1:
                 end_line = []
-                end_line.extend(["┗"])
-                end_line.extend(["━" for x in range(len(line) - 2)])
-                end_line.extend(["┛"])
+                end_line.extend(["╰"])
+                end_line.extend(["─" for x in range((len(line) * 2) - 2)])
+                end_line.extend(["╯"])
                 new_grid.append("".join(end_line))
                 continue
             else:
                 mid_line = []
-                mid_line.extend(["┃"])
-                new_line = ["▄" if x == "1" else " " for x in line[1:-1]]
+                mid_line.extend(["│ "])
+                new_line = ["██" if x == "1" else "  " for x in line[1:-1]]
                 mid_line.extend(new_line)
-                mid_line.extend(["┃"])
+                mid_line.extend([" │"])
                 new_grid.append("".join(mid_line))
                 continue
 
