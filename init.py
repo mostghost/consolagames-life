@@ -13,13 +13,15 @@ display_manager = cg_display.CGDisplay()
 TARGET_FPS = 12
 TARGET_DURATION = 1.0 / TARGET_FPS
 
+FRAME_COUNT = 0
+
 
 while True:
     delta_start = time.time()
 
     input_manager.update()
-    logic_manager.update()
-    display_manager.update()
+    grid = logic_manager.update()
+    display_manager.update(FRAME_COUNT, grid)
 
     delta_end = time.time()
 
@@ -28,3 +30,5 @@ while True:
 
     if delta_frame > 0:
         time.sleep(delta_frame)
+
+    FRAME_COUNT += 1
