@@ -1,4 +1,3 @@
-from tarfile import tar_filter
 from modules import cg_input
 from modules import cg_logic
 from modules import cg_display
