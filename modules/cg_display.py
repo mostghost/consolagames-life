@@ -1,6 +1,4 @@
 import os
-import pprint
-
 
 class CGDisplay:
     def __init__(self):
