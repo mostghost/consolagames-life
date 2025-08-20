@@ -9,6 +9,12 @@ class CGDisplay:
         self.fps_store = 0
         self.paused = False
 
+        self.target_fps = 12
+        self.target_duration = 1.0 / 12
+
+        self.append_block = []
+        self.append_block_paused = []
+
     def change_fps(self):
 
         match self.fps_next:
@@ -73,7 +79,18 @@ class CGDisplay:
 
         for line in grid_formatted:
             print(line)
-        print(frame_count)
+
+        if not self.append_block:
+            line_length = len(grid_formatted[0])
+            self._get_append_block(line_length)
+            self._get_append_paused(line_length)
+
+        if paused:
+            for line in self.append_block_paused:
+                print(line)
+        else:
+            for line in self.append_block:
+                print(line)
 
     def _format(self, grid: list):
 
@@ -89,9 +106,9 @@ class CGDisplay:
                 continue
             elif index == len(grid) - 1:
                 end_line = []
-                end_line.extend(["╰"])
+                end_line.extend(["├"])
                 end_line.extend(["─" for x in range((len(line) * 2) - 2)])
-                end_line.extend(["╯"])
+                end_line.extend(["┤"])
                 new_grid.append("".join(end_line))
                 continue
             else:
@@ -116,3 +133,68 @@ class CGDisplay:
         grid[y] = grid[y][: x * 2] + cursor_replacement + grid[y][x * 2 + 2 :]
 
         return grid
+
+    def _get_append_paused(self, length: int):
+        line_wasd = "W, A, S, D to move cursor"
+        line_space = "Space to toggle a cell"
+        line_q = "Q to go back to Live Mode"
+        pause_ender = " ▋ ▋         │"
+
+        blank_space = " " * (length - 2 - 2 - len(line_wasd))
+        one = "│ " + line_wasd + blank_space + " │"
+
+        blank_space = " " * (length - 2 - len(line_space) - len(pause_ender))
+        two = "│ " + line_space + blank_space + pause_ender
+
+        blank_space = " " * (length - 2 - len(line_q) - len(pause_ender))
+        three = "│ " + line_q + blank_space + pause_ender
+
+        blank_space = " " * (length - 2 - len(pause_ender))
+        four = "│ " + blank_space + pause_ender
+
+        blank_space = " " * (length - 2 - 2)
+        five = "│ " + blank_space + " │"
+
+        six = "╰" + ("─" * (length - 2)) + "╯"
+
+        self.append_block_paused.append(one)
+        self.append_block_paused.append(two)
+        self.append_block_paused.append(three)
+        self.append_block_paused.append(four)
+        self.append_block_paused.append(five)
+        self.append_block_paused.append(six)
+
+
+
+    def _get_append_block(self, length: int):
+        line_q = "Q to Place Blocks"
+        line_o = "O to Exit"
+        line_v = "V for preset - Blank"
+        line_b = "B for preset - Zigzag"
+        line_n = "N for preset - Explosion"
+        line_m = "M for preset - Gliders"
+        line_z = f"Z to change FPS"
+
+        blank_space = " " * (length - 2 - 2 - len(line_q) - len(line_o))
+        one = "│ " + line_q + blank_space + line_o + " │"
+
+        blank_space = " " * (length - 2 - 2 - len(line_v))
+        two = "│ " + blank_space + line_v + " │"
+
+        blank_space = " " * (length - 2 - 2 - len(line_b))
+        three = "│ " + blank_space + line_b + " │"
+
+        blank_space = " " * (length - 2 - 2 - len(line_n))
+        four = "│ " + blank_space + line_n + " │"
+
+        blank_space = " " * (length - 2 - 2 - len(line_m) - len(line_z))
+        five = "│ " + line_z + blank_space + line_m + " │"
+
+        six = "╰" + ("─" * (length - 2)) + "╯"
+
+        self.append_block.append(one)
+        self.append_block.append(two)
+        self.append_block.append(three)
+        self.append_block.append(four)
+        self.append_block.append(five)
+        self.append_block.append(six)
