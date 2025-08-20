@@ -5,16 +5,19 @@ class CGLogic:
 
         self.pause = False
 
-        with open("modules/display_test.txt", "r") as fh:
-            for line in fh:
-                line_list = line.strip().replace(" ", "").split(",")
-                self.old_grid.append(line_list)
+        self.blank_grid = self._grid_convert(self._load_preset("blank"), "int")
+        self.glider_grid = self._grid_convert(self._load_preset("gliders"), "int")
+        self.explosion_grid = self._grid_convert(self._load_preset("explosions"), "int")
+        self.zigzag_grid = self._grid_convert(self._load_preset("zigzag"), "int")
 
-        self.old_grid = self._grid_convert(self.old_grid, "int")
+        self.old_grid = self.blank_grid
 
     def update(self, inp: str):
         if inp == "Q":
             self.pause = not self.pause
+
+        if inp in ["V", "B", "N", "M"]:
+            self._set_preset(inp)
 
         if self.pause:
             self._move_cursor(inp)
@@ -118,3 +121,26 @@ class CGLogic:
         if inp == " ":
             x, y = self.cursor
             self.old_grid[y][x] = int(not self.old_grid[y][x])
+
+    def _load_preset(self, filename: str):
+
+        preset_grid = []
+
+        with open(f"modules/{filename}.txt", "r") as fh:
+            for line in fh:
+                line_list = line.strip().replace(" ", "").split(",")
+                preset_grid.append(line_list)
+
+        return preset_grid
+
+    def _set_preset(self, inp: str):
+
+        match inp:
+            case "V":
+                self.old_grid = self.blank_grid
+            case "B":
+                self.old_grid = self.zigzag_grid
+            case "M":
+                self.old_grid = self.glider_grid
+            case "N":
+                self.old_grid = self.explosion_grid

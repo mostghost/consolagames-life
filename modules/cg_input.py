@@ -53,10 +53,11 @@ class CGInput:
             "S",  # Down
             "D",  # Right
             "Z",  # Change FPS
-            "B",  # Preset 1
-            "N",  # Preset 2
-            "M",
-        ]:  # Preset 3
+            "V",  # Preset 1
+            "B",  # Preset 2
+            "N",  # Preset 3
+            "M",  # Preset 4
+        ]:  
             return inp
 
     def _windows_input(self):

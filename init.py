@@ -41,6 +41,7 @@ try:
             TARGET_FPS, TARGET_DURATION = display_manager.change_fps()
 
         print(TARGET_FPS, TARGET_DURATION)
+        print(inp)
 
         delta_end = time.time()
 
