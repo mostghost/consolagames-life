@@ -7,10 +7,10 @@ class CGDisplay:
 
     def update(self, frame_count: int, grid: list):
 
+        grid_formatted = self._format(grid)
+
         # Wipe the terminal clear before starting a new frame
         os.system("cls" if os.name == "nt" else "clear")
-
-        grid_formatted = self._format(grid)
 
         for line in grid_formatted:
             print(line)
