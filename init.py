@@ -34,7 +34,7 @@ try:
         if inp == "O":
             sys.exit()
 
-        grid, paused, cursor = logic_manager.update(q)
+        grid, paused, cursor = logic_manager.update(inp)
         display_manager.update(FRAME_COUNT, grid, paused, cursor)
         print(inp)
         print(cursor)
