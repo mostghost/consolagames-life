@@ -34,8 +34,8 @@ try:
         if inp == "P":
             sys.exit()
 
-        grid = logic_manager.update()
-        display_manager.update(FRAME_COUNT, grid)
+        grid, paused = logic_manager.update(inp)
+        display_manager.update(FRAME_COUNT, grid, paused)
         print(inp)
 
         delta_end = time.time()

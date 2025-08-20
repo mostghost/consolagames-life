@@ -5,7 +5,7 @@ class CGDisplay:
     def __init__(self):
         pass
 
-    def update(self, frame_count: int, grid: list):
+    def update(self, frame_count: int, grid: list, paused: str):
 
         grid_formatted = self._format(grid)
 
@@ -15,6 +15,10 @@ class CGDisplay:
         for line in grid_formatted:
             print(line)
         print(frame_count)
+
+        if paused:
+            print("Pause!")
+            # More pause logic will go here for changing the instructions on pause
 
     def _format(self, grid: list):
 
