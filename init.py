@@ -35,9 +35,12 @@ try:
             sys.exit()
 
         grid, paused, cursor = logic_manager.update(inp)
-        display_manager.update(FRAME_COUNT, grid, paused, cursor)
-        print(inp)
-        print(cursor)
+
+        pause_sc = display_manager.update(FRAME_COUNT, grid, paused, cursor)
+        if inp == "Z" or pause_sc:  # pause_sc is a special case for pausing/unpausing
+            TARGET_FPS, TARGET_DURATION = display_manager.change_fps()
+
+        print(TARGET_FPS, TARGET_DURATION)
 
         delta_end = time.time()
 

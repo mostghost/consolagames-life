@@ -44,16 +44,19 @@ class CGInput:
     def update(self):
         inp = self._get_input()
 
-        if inp in ["Q",   # Pause
-                   "E",   # Toggle
-                   "O",   # Quit
-                   "W",   # Up
-                   "A",   # Left
-                   "S",   # Down
-                   "D",   # Right
-                   "B",   # Preset 1
-                   "N",   # Preset 2
-                   "M"]:  # Preset 3
+        if inp in [
+            "Q",  # Pause
+            " ",  # Toggle
+            "O",  # Quit
+            "W",  # Up
+            "A",  # Left
+            "S",  # Down
+            "D",  # Right
+            "Z",  # Change FPS
+            "B",  # Preset 1
+            "N",  # Preset 2
+            "M",
+        ]:  # Preset 3
             return inp
 
     def _windows_input(self):
@@ -95,3 +98,5 @@ class CGInput:
         if last_char:
             if last_char.isalpha():
                 return last_char.upper()
+            elif last_char == " ":
+                return last_char

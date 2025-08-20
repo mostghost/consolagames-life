@@ -115,6 +115,6 @@ class CGLogic:
 
     def _toggle(self, inp: str):
 
-        if inp == "E":
+        if inp == " ":
             x, y = self.cursor
             self.old_grid[y][x] = int(not self.old_grid[y][x])
