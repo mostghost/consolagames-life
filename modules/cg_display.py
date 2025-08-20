@@ -5,20 +5,19 @@ class CGDisplay:
     def __init__(self):
         pass
 
-    def update(self, frame_count: int, grid: list, paused: str):
+    def update(self, frame_count: int, grid: list, paused: str, cursor: tuple):
 
         grid_formatted = self._format(grid)
 
         # Wipe the terminal clear before starting a new frame
         os.system("cls" if os.name == "nt" else "clear")
 
+        if paused:
+            grid_formatted = self._place_cursor(grid_formatted, cursor)
+
         for line in grid_formatted:
             print(line)
         print(frame_count)
-
-        if paused:
-            print("Pause!")
-            # More pause logic will go here for changing the instructions on pause
 
     def _format(self, grid: list):
 
@@ -49,3 +48,15 @@ class CGDisplay:
                 continue
 
         return new_grid
+
+    def _place_cursor(self, grid: list, cursor: tuple):
+        x, y = cursor
+
+        if grid[y][x * 2] == "█":
+            cursor_replacement = "▓▓"
+        elif grid[y][x * 2] == " ":
+            cursor_replacement = "░░"
+
+        grid[y] = grid[y][: x * 2] + cursor_replacement + grid[y][x * 2 + 2 :]
+
+        return grid

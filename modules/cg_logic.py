@@ -1,7 +1,7 @@
 class CGLogic:
     def __init__(self):
         self.old_grid = []
-        self.pause_grid = []
+        self.cursor = (1, 1)  # The cursor should start offset from the border.
 
         self.pause = False
 
@@ -17,8 +17,13 @@ class CGLogic:
             self.pause = not self.pause
 
         if self.pause:
-            # Pause logic
-            return (self._grid_convert(self.old_grid, "str"), True)  # Grid, Pause
+            self._move_cursor(inp)
+
+            self._toggle(inp)
+
+            updated_grid = self._grid_convert(self.old_grid, "str")
+
+            return (updated_grid, True, self.cursor)  # Grid, Pause
         else:
             updated_grid = self._run(self.old_grid)
 
@@ -27,7 +32,7 @@ class CGLogic:
             self.old_grid = updated_grid
             updated_grid = self._grid_convert(updated_grid, "str")
 
-            return (updated_grid, False)  # Grid, Pause
+            return (updated_grid, False, (0, 0))  # Grid, Pause
 
     def _run(self, working_grid: list):
         updated_grid = []
@@ -87,3 +92,29 @@ class CGLogic:
                 grid_converted.append([int(x) for x in line])
 
         return grid_converted
+
+    def _move_cursor(self, inp: str):
+
+        x, y = self.cursor
+
+        match inp:
+            case "W":
+                y = y - 1
+            case "S":
+                y = y + 1
+            case "A":
+                x = x - 1
+            case "D":
+                x = x + 1
+
+        width = len(self.old_grid[0])
+        height = len(self.old_grid)
+
+        if (x > 0 and x < (width - 1)) and (y > 0 and y < (height - 1)):
+            self.cursor = (x, y)
+
+    def _toggle(self, inp: str):
+
+        if inp == "E":
+            x, y = self.cursor
+            self.old_grid[y][x] = int(not self.old_grid[y][x])

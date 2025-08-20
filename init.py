@@ -34,9 +34,10 @@ try:
         if inp == "O":
             sys.exit()
 
-        grid, paused = logic_manager.update(inp)
-        display_manager.update(FRAME_COUNT, grid, paused)
+        grid, paused, cursor = logic_manager.update(q)
+        display_manager.update(FRAME_COUNT, grid, paused, cursor)
         print(inp)
+        print(cursor)
 
         delta_end = time.time()
 
