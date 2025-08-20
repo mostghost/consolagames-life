@@ -46,7 +46,7 @@ class CGInput:
 
         if inp in ["Q",   # Pause
                    "E",   # Toggle
-                   "P",   # Quit
+                   "O",   # Quit
                    "W",   # Up
                    "A",   # Left
                    "S",   # Down

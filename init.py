@@ -31,7 +31,7 @@ try:
 
         inp = input_manager.update()
         # One special exception as soon as we get input:
-        if inp == "P":
+        if inp == "O":
             sys.exit()
 
         grid, paused = logic_manager.update(inp)
