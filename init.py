@@ -23,8 +23,6 @@ display_manager = cg_display.CGDisplay()
 TARGET_FPS = 12
 TARGET_DURATION = 1.0 / TARGET_FPS
 
-FRAME_COUNT = 0
-
 try:
     while True:
         delta_start = time.time()
@@ -36,7 +34,7 @@ try:
 
         grid, paused, cursor = logic_manager.update(inp)
 
-        pause_sc = display_manager.update(FRAME_COUNT, grid, paused, cursor)
+        pause_sc = display_manager.update(grid, paused, cursor)
         if inp == "Z" or pause_sc:  # pause_sc is a special case for pausing/unpausing
             TARGET_FPS, TARGET_DURATION = display_manager.change_fps()
 
@@ -48,7 +46,6 @@ try:
         if delta_frame > 0:
             time.sleep(delta_frame)
 
-        FRAME_COUNT += 1
 finally:
     if platform.system() != "Windows":
         termios.tcsetattr(fd, termios.TCSANOW, old_term)

@@ -57,7 +57,7 @@ class CGDisplay:
 
         return TARGET_FPS, TARGET_DURATION
 
-    def update(self, frame_count: int, grid: list, paused: bool, cursor: tuple):
+    def update(self, grid: list, paused: bool, cursor: tuple):
 
         if self.paused != paused:  # Pause was toggled last frame.
             if self.paused is False and paused is True:
@@ -88,9 +88,9 @@ class CGDisplay:
         # print(line)
 
         if paused:
-            sys.stdout.write(self.append_block_paused)
+            sys.stdout.write(self.append_block_paused + "\n")
         else:
-            sys.stdout.write(self.append_block)
+            sys.stdout.write(self.append_block + "\n")
 
     def _format(self, grid: list):
 
