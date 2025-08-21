@@ -1,4 +1,5 @@
 import os
+import sys
 
 
 class CGDisplay:
@@ -71,26 +72,25 @@ class CGDisplay:
 
         grid_formatted = self._format(grid)
 
-        # Wipe the terminal clear before starting a new frame
-        os.system("cls" if os.name == "nt" else "clear")
-
         if paused:
             grid_formatted = self._place_cursor(grid_formatted, cursor)
-
-        for line in grid_formatted:
-            print(line)
 
         if not self.append_block:
             line_length = len(grid_formatted[0])
             self._get_append_block(line_length)
             self._get_append_paused(line_length)
 
+        # Wipe the terminal clear before starting a new frame
+        os.system("cls" if os.name == "nt" else "clear")
+
+        sys.stdout.write("\n".join(grid_formatted) + "\n")
+        # for line in grid_formatted:
+        # print(line)
+
         if paused:
-            for line in self.append_block_paused:
-                print(line)
+            sys.stdout.write(self.append_block_paused)
         else:
-            for line in self.append_block:
-                print(line)
+            sys.stdout.write(self.append_block)
 
     def _format(self, grid: list):
 
@@ -164,7 +164,7 @@ class CGDisplay:
         self.append_block_paused.append(five)
         self.append_block_paused.append(six)
 
-
+        self.append_block_paused = "\n".join(self.append_block_paused)
 
     def _get_append_block(self, length: int):
         line_q = "Q to Place Blocks"
@@ -198,3 +198,5 @@ class CGDisplay:
         self.append_block.append(four)
         self.append_block.append(five)
         self.append_block.append(six)
+
+        self.append_block = "\n".join(self.append_block)
