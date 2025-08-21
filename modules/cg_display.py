@@ -16,6 +16,8 @@ class CGDisplay:
         self.append_block = []
         self.append_block_paused = []
 
+        self.clear_screen = True
+
     def change_fps(self):
 
         match self.fps_next:
@@ -57,7 +59,7 @@ class CGDisplay:
 
         return TARGET_FPS, TARGET_DURATION
 
-    def update(self, grid: list, paused: bool, cursor: tuple):
+    def update(self, grid: list, paused: bool, cursor: tuple, inp:str):
 
         if self.paused != paused:  # Pause was toggled last frame.
             if self.paused is False and paused is True:
@@ -81,7 +83,11 @@ class CGDisplay:
             self._get_append_paused(line_length)
 
         # Wipe the terminal clear before starting a new frame
-        os.system("cls" if os.name == "nt" else "clear")
+        if inp == "X":
+            self.clear_screen = not self.clear_screen
+
+        if self.clear_screen:
+            os.system("cls" if os.name == "nt" else "clear")
 
         sys.stdout.write("\n".join(grid_formatted) + "\n")
         # for line in grid_formatted:
@@ -173,7 +179,8 @@ class CGDisplay:
         line_b = "B for preset - Zigzag"
         line_n = "N for preset - Explosion"
         line_m = "M for preset - Gliders"
-        line_z = f"Z to change FPS"
+        line_x = "X to toggle Screen Clearing"
+        line_z = "Z to change FPS"
 
         blank_space = " " * (length - 2 - 2 - len(line_q) - len(line_o))
         one = "│ " + line_q + blank_space + line_o + " │"
@@ -184,8 +191,8 @@ class CGDisplay:
         blank_space = " " * (length - 2 - 2 - len(line_b))
         three = "│ " + blank_space + line_b + " │"
 
-        blank_space = " " * (length - 2 - 2 - len(line_n))
-        four = "│ " + blank_space + line_n + " │"
+        blank_space = " " * (length - 2 - 2 - len(line_n) - len(line_x))
+        four = "│ " + line_x + blank_space + line_n + " │"
 
         blank_space = " " * (length - 2 - 2 - len(line_m) - len(line_z))
         five = "│ " + line_z + blank_space + line_m + " │"

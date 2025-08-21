@@ -34,7 +34,7 @@ try:
 
         grid, paused, cursor = logic_manager.update(inp)
 
-        pause_sc = display_manager.update(grid, paused, cursor)
+        pause_sc = display_manager.update(grid, paused, cursor, inp)
         if inp == "Z" or pause_sc:  # pause_sc is a special case for pausing/unpausing
             TARGET_FPS, TARGET_DURATION = display_manager.change_fps()
 

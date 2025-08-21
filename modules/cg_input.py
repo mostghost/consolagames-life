@@ -53,6 +53,7 @@ class CGInput:
             "S",  # Down
             "D",  # Right
             "Z",  # Change FPS
+            "X",  # Toggle screen clear
             "V",  # Preset 1
             "B",  # Preset 2
             "N",  # Preset 3
